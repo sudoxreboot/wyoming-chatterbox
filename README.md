@@ -12,13 +12,9 @@ clone any voice with a 10-30 second audio sample.
 
 ## install
 
+from source:
 ```bash
-pip install wyoming-chatterbox
-```
-
-or from source:
-```bash
-git clone https://github.com/sudoxnym/wyoming-chatterbox
+git clone https://github.com/sudoxreboot/wyoming-chatterbox
 cd wyoming-chatterbox
 pip install .
 ```
