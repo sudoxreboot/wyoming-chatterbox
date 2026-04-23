@@ -1,0 +1,28 @@
+services:
+  wyoming-chatterbox:
+    build: .
+    image: wyoming-chatterbox:latest
+    container_name: wyoming-chatterbox
+    restart: unless-stopped
+    ports:
+      - "${WYOMING_PORT:-10800}:10800"
+    volumes:
+      - chatterbox-cache:/cache
+      - ${VOICE_REF_DIR}:/voice:ro
+    environment:
+      - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+    command: >
+      --uri tcp://0.0.0.0:10800
+      --voice-ref /voice/${VOICE_REF_FILE}
+      --volume-boost ${VOLUME_BOOST:-3.0}
+      --device ${TORCH_DEVICE:-cuda}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+volumes:
+  chatterbox-cache:
